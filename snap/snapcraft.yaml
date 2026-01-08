@@ -1,0 +1,44 @@
+name: pulsar-edit
+base: core24
+version: 1.130.1
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+  arm64:
+    build-on: [arm64]
+    build-for: [arm64]
+summary: A community-led, hyper-hackable text editor
+description: |
+ Pulsar is a fork of the discontinued Atom editor - assuming its mission of being a zero-compromise combination of hackability and usability.
+grade: stable
+confinement: strict
+icon: resources/linux/pulsar.svg
+assumes:
+  - snapd2.54
+
+apps:
+  pulsar-edit:
+    command: opt/Pulsar/pulsar --no-sandbox
+    desktop: usr/share/applications/pulsar.desktop
+    common-id: dev.pulsar_edit.Pulsar
+    extensions: [gnome]
+    plugs:
+      - unity7
+      - audio-playback
+      - network
+      - network-bind
+      - home
+      - removable-media
+      - browser-support
+
+plugs:
+  shared-memory:
+    private: true
+
+parts:
+  pulsar-edit:
+    plugin: dump
+    source:
+      - on amd64: https://github.com/pulsar-edit/pulsar/releases/download/v$SNAPCRAFT_PROJECT_VERSION/Linux.pulsar_$SNAPCRAFT_PROJECT_VERSION_amd64.deb
+      - on arm64: https://github.com/pulsar-edit/pulsar/releases/download/v$SNAPCRAFT_PROJECT_VERSION/ARM.Linux.pulsar_$SNAPCRAFT_PROJECT_VERSION_arm64.deb
